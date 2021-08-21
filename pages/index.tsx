@@ -54,17 +54,17 @@ const Home = () => {
               ))}
             </div>
           </div>
-          <div className="bg-white absolute h-48 bottom-1/4 lg:-bottom-1/4 lg:h-full w-48 lg:w-1/2 rounded-full animate-slow-ping"></div>
-          <div className="flex bg-blue-400 text-white text-2xl md:text-5xl py-8 md:py-12 absolute bottom-0 h-1/3 w-full z-20 justify-around">
-            <div className="flex justify-around w-full font-bold text-base md:text-2xl lg:text-5xl">
-              <p className="mr-24 md:mr-48">F.E.M.S. 5.562.92</p>
-              <p className="ml-24 md:ml-48">CX. 54/38.10</p>
+          <div className="bg-white absolute h-48 bottom-0 sm:bottom-1/4 lg:-bottom-1/4 lg:h-full w-48 lg:w-1/2 rounded-full animate-slow-ping"></div>
+          <div className="flex bg-blue-400 text-white text-2xl md:text-5xl py-8 md:py-12 absolute bottom-0 h-1/4 md:h-1/3 w-full z-20 justify-around">
+            <div className="flex justify-around w-full font-bold text-xs sm:text-base md:text-2xl lg:text-5xl">
+              <p className="mr-10 sm:mr-24 md:mr-48">F.E.M.S. 5.562.92</p>
+              <p className="ml-10 sm:ml-24 md:ml-48">CX. 54/38.10</p>
             </div>
             <div
               onClick={() => {
                 markerCount === 0 ? setmarkerCount(2) : setmarkerCount(0);
               }}
-              className="flex px-5 text-2xl md:text-5xl font-bold absolute top-0 bg-black text-red-600 rounded-b-3xl w-28 h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
+              className="flex px-5 text-xl sm:text-2xl md:text-5xl font-bold absolute top-0 bg-black text-red-600 rounded-b-3xl w-28 h-8 sm:h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
             >
               {markerCount === 0 ? 0 : <Timer seconds={350} />}
               <div className="flex flex-col text-xs leading-none md:leading-none sm:leading-none md:text-lg items-center">
