@@ -41,7 +41,7 @@ const Home = () => {
       });
       setAliens(updates);
     }
-  });
+  }, []);
 
   createAliens().map((alien) => alien);
   return (
@@ -55,18 +55,20 @@ const Home = () => {
       <main className="">
         <div>
           <div className="flex justify-center items-center">
-            <img
-              src="/AlienTrackerImg.png"
-              alt="AlienTracker"
-              className="flex-0 top-80 md:top-0 animate-scenario relative z-0"
-            />
-            <div className="flex animate-slow-pulse">
-              {createAliens().map((alien, index) => (
-                <div
-                  key={`${index}`}
-                  className={`bg-blue-200 border-blue-300 border-4 border-opacity-75 rounded-full h-12 w-12 md:h-24 md:w-24 absolute top-${alien.value1} ${alien.direction}-${alien.value2}`}
-                ></div>
-              ))}
+            <div className="top-80 md:top-0 relative animate-scenario">
+              <img
+                src="/AlienTrackerImg.png"
+                alt="AlienTracker"
+                className="z-0"
+              />
+              <div className="flex animate-slow-pulse">
+                {createAliens().map((alien, index) => (
+                  <div
+                    key={`${index}`}
+                    className={`bg-blue-200 border-blue-300 border-4 border-opacity-75 rounded-full h-12 w-12 md:h-24 md:w-24 absolute top-${alien.value1} ${alien.direction}-${alien.value2}`}
+                  ></div>
+                ))}
+              </div>
             </div>
             <div className="bg-white absolute h-48 bottom-1/4 lg:-bottom-1/4 lg:h-full w-48 lg:w-1/2 rounded-full animate-slow-ping"></div>
             <div className="flex bg-blue-400 text-white text-2xl md:text-5xl py-8 md:py-12 absolute bottom-0 h-1/3 w-full z-10 justify-around">

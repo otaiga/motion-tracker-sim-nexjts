@@ -7,12 +7,12 @@ module.exports = {
         "spin-slow": "scenario 40s linear infinite",
         "slow-ping": "ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite",
         "slow-pulse": "pulse-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite",
-        scenario: "scenario 40s ease-in-out infinite",
+        scenario: "scenario 10s ease-in-out infinite",
       },
       keyframes: {
         scenario: {
-          "0%, 100%": { transform: "rotate(-180deg)" },
-          "50%": { transform: "rotate(180deg)" },
+          "0%, 100%": { transform: "rotate(-45deg)" },
+          "50%": { transform: "rotate(45deg)" },
         },
         "pulse-slow": {
           "0%, 100%": {
