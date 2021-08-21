@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
+import Timer from "../components/timer";
 
 const Home = () => {
-  const [alientCount, setAlienCount] = useState(0);
-  const [aliens, setAliens] = useState<({ [key: string]: string } | null)[]>(
+  const [markerCount, setmarkerCount] = useState(0);
+  const [markers, setMarkers] = useState<({ [key: string]: string } | null)[]>(
     []
   );
 
   const possibleValues = ["0", "1/4", "1/3", "1/2"];
   const possibleDirections = ["right", "left"];
 
-  const createAliens = () => {
-    const aliens = [];
-    for (let i = 0; i < alientCount; i++) {
+  const createMarkers = () => {
+    const newMarkers = [];
+    for (let i = 0; i < markerCount; i++) {
       const direction =
         possibleDirections[
           Math.floor(Math.random() * possibleDirections.length)
@@ -21,29 +22,11 @@ const Home = () => {
         possibleValues[Math.floor(Math.random() * possibleValues.length)];
       const value2 =
         possibleValues[Math.floor(Math.random() * possibleValues.length)];
-      aliens.push({ value1, value2, direction });
+      newMarkers.push({ value1, value2, direction });
     }
-    return aliens;
+    return newMarkers;
   };
 
-  useEffect(() => {
-    if (aliens.length > 0) {
-      const updates = aliens.map((alien) => {
-        if (!alien) {
-          return null;
-        }
-        const valIndex = possibleValues.indexOf(alien.value1) + 1;
-        if (valIndex > possibleValues.length) {
-          return null;
-        }
-        alien.value1 = possibleValues[valIndex];
-        return alien;
-      });
-      setAliens(updates);
-    }
-  }, []);
-
-  createAliens().map((alien) => alien);
   return (
     <div className="bg-black h-screen mx-auto overflow-hidden relative">
       <Head>
@@ -52,7 +35,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="">
+      <main>
         <div className="flex justify-center items-center">
           <div className="top-80 md:top-0 relative animate-scenario">
             <img
@@ -61,10 +44,10 @@ const Home = () => {
               className="z-0"
             />
             <div className="flex animate-slow-pulse">
-              {createAliens().map((alien, index) => (
+              {createMarkers().map((marker, index) => (
                 <div
                   key={`${index}`}
-                  className={` z-10 bg-blue-200 border-blue-300 border-4 border-opacity-75 rounded-full h-12 w-12 md:h-24 md:w-24 absolute top-${alien.value1} ${alien.direction}-${alien.value2}`}
+                  className={`bg-blue-200 border-blue-300 border-4 border-opacity-75 rounded-full h-12 w-12 md:h-24 md:w-24 absolute top-${marker.value1} ${marker.direction}-${marker.value2}`}
                 ></div>
               ))}
             </div>
@@ -77,11 +60,11 @@ const Home = () => {
             </div>
             <div
               onClick={() => {
-                alientCount === 0 ? setAlienCount(2) : setAlienCount(0);
+                markerCount === 0 ? setmarkerCount(2) : setmarkerCount(0);
               }}
               className="flex px-5 text-2xl md:text-5xl font-bold absolute top-0 bg-black text-red-600 rounded-b-3xl w-28 h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
             >
-              <p>320</p>
+              {markerCount === 0 ? 0 : <Timer seconds={350} />}
               <div className="flex flex-col text-xs leading-none md:leading-none sm:leading-none md:text-lg items-center">
                 <p>10</p>
                 <p>M</p>
