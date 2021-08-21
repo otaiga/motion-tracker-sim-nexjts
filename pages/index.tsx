@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Timer from "../components/timer";
-import trackerImg from "../public/trackerImage.png";
 
 const Home = () => {
   const [markerCount, setmarkerCount] = useState(0);
@@ -40,10 +39,11 @@ const Home = () => {
       <main>
         <div className="flex justify-center items-center">
           <div className="top-80 md:top-0 relative animate-scenario">
-            <Image
-              src={trackerImg}
+            <img
+              src="./trackerImage.png"
               alt="Picture of radar background"
               className="z-0"
+              height="full"
             />
             <div className="flex animate-slow-pulse">
               {createMarkers().map((marker, index) => (
