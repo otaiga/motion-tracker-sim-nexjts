@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Timer from "../components/Timer";
 import Marker from "../components/Marker";
@@ -47,12 +47,14 @@ const Home = () => {
     setPopUp(false);
   };
 
-  if (audio) {
-    audio.play();
-  }
-  if (markerAudio) {
-    markerAudio.play();
-  }
+  useEffect(() => {
+    if (audio) {
+      audio.play();
+    }
+    if (markerAudio) {
+      markerAudio.play();
+    }
+  }, [markerPerc]);
 
   return (
     <div className="bg-black h-screen mx-auto overflow-hidden relative">
