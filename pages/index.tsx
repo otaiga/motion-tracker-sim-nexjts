@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Head from "next/head";
 import Timer from "../components/Timer";
 import Marker from "../components/Marker";
@@ -11,9 +11,13 @@ const Home = () => {
   const [markerPerc, setMarkerPerc] = useState("");
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [markerAudio, setMarkerAudio] = useState<HTMLAudioElement | null>(null);
+  const pulseSound = useRef<HTMLAudioElement | null>(null);
+  const markerSound = useRef<HTMLAudioElement | null>(null);
 
   const timerCallback = (updatedTime: number) => {
     if (updatedTime === 0) {
+      pulseSound.current = null;
+      markerSound.current = null;
       setCountDownStarted(false);
       setMarkerAudio(null);
       setAudio(null);
@@ -21,21 +25,23 @@ const Home = () => {
     const perc = 50 - ((100 / Number(timeSet)) * updatedTime) / 2;
     if (updatedTime < 5 && !markerAudio) {
       const markerPulse = new Audio("./markerPulse.mp3");
+      markerSound.current = markerPulse;
       setMarkerAudio(markerPulse);
     }
     setMarkerPerc(`${perc < 0 ? perc - perc * 0.5 : perc}%`);
   };
 
   const handleOkClick = (timerSet: number) => {
+    if (!audio) {
+      const pulse = new Audio("./pulse.mp3");
+      pulseSound.current = pulse;
+      setAudio(pulse);
+    }
     setMarkerPerc("");
     setCountDownStarted(false);
     setTimeSet(timerSet);
     setCountDownStarted(true);
     setPopUp(false);
-    if (!audio) {
-      const pulse = new Audio("./pulse.mp3");
-      setAudio(pulse);
-    }
   };
 
   const handleCancelClick = () => {
@@ -47,12 +53,13 @@ const Home = () => {
     setPopUp(false);
   };
 
-  if (markerAudio) {
-    markerAudio.play();
+  if (pulseSound.current) {
+    pulseSound.current.play();
   }
-  if (audio) {
-    audio.play();
+  if (markerSound.current) {
+    markerSound.current.play();
   }
+
   return (
     <div className="bg-black h-screen mx-auto overflow-hidden relative">
       <Head>
