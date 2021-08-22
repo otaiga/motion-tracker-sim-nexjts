@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Head from "next/head";
 import Timer from "../components/Timer";
 import Marker from "../components/Marker";
@@ -9,19 +9,22 @@ const Home = () => {
   const [popUp, setPopUp] = useState(false);
   const [timeSet, setTimeSet] = useState(0);
   const [markerPerc, setMarkerPerc] = useState("");
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [markerAudio, setMarkerAudio] = useState<HTMLAudioElement | null>(null);
+  const [playMarker, setPlayMarker] = useState(false);
+
+  const audio = useRef<HTMLAudioElement>(null);
+  const markerAudio = useRef<HTMLAudioElement>(null);
 
   const timerCallback = (updatedTime: number) => {
     if (updatedTime === 0) {
       setCountDownStarted(false);
-      setMarkerAudio(null);
-      setAudio(null);
+      setPlayMarker(false);
+      return;
     }
     const perc = 50 - ((100 / Number(timeSet)) * updatedTime) / 2;
-    if (updatedTime < 5 && !markerAudio) {
-      const markerPulse = new Audio("./markerPulse.mp3");
-      setMarkerAudio(markerPulse);
+    if (updatedTime < 5) {
+      setPlayMarker(true);
+    } else {
+      setPlayMarker(false);
     }
     setMarkerPerc(`${perc < 0 ? perc - perc * 0.5 : perc}%`);
   };
@@ -32,9 +35,13 @@ const Home = () => {
     setTimeSet(timerSet);
     setCountDownStarted(true);
     setPopUp(false);
-    if (!audio) {
-      const pulse = new Audio("./pulse.mp3");
-      setAudio(pulse);
+    if (audio && audio.current) {
+      audio.current.autoplay = true;
+    }
+    if (markerAudio && markerAudio.current) {
+      if (playMarker) {
+        markerAudio.current.autoplay = true;
+      }
     }
   };
 
@@ -42,17 +49,20 @@ const Home = () => {
     setTimeSet(0);
     setMarkerPerc("");
     setCountDownStarted(false);
-    setAudio(null);
-    setMarkerAudio(null);
     setPopUp(false);
+    setPlayMarker(false);
   };
 
   useEffect(() => {
-    if (audio) {
-      audio.play();
+    if (audio && audio.current) {
+      if (countDownStarted) {
+        audio.current.play();
+      }
     }
-    if (markerAudio) {
-      markerAudio.play();
+    if (markerAudio && markerAudio.current) {
+      if (playMarker) {
+        markerAudio.current.play();
+      }
     }
   }, [markerPerc]);
 
@@ -107,9 +117,12 @@ const Home = () => {
           handleCancelClick={handleCancelClick}
         />
       )}
-      {/* <audio controls loop>
+      <audio ref={audio}>
         <source src="./pulse.mp3" type="audio/mpeg"></source>
-      </audio> */}
+      </audio>
+      <audio ref={markerAudio}>
+        <source src="./markerPulse.mp3" type="audio/mpeg"></source>
+      </audio>
     </div>
   );
 };
