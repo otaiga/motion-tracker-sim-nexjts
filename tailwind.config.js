@@ -3,6 +3,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        portrait: { raw: "(orientation: portrait)" },
+        landscape: { raw: "(orientation: landscape)" },
+      },
       animation: {
         "spin-slow": "scenario 40s linear infinite",
         "slow-ping": "ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite",

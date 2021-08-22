@@ -45,11 +45,11 @@ const Home = () => {
       </Head>
 
       <main className="flex flex-col items-center">
-        <div className="animate-scenario absolute lg:top-0 top-1/2 items-center justify-center">
+        <div className="animate-scenario absolute items-center justify-center portrait:bottom-2 landscape:top-4">
           <img
             src="./trackerImage.svg"
             alt="Picture of radar background"
-            className="z-0 h-96 w-96 lg:h-full lg:w-full"
+            className="z-0 h-96 w-96 md:h-full md:w-full"
           />
           {countDownStarted && (
             <div className="animate-slow-pulse">
@@ -57,7 +57,7 @@ const Home = () => {
             </div>
           )}
         </div>
-        <div className="bg-white absolute top-1/2 h-96 w-96 lg:h-full lg:w-1/2 rounded-full animate-slow-ping" />
+        <div className="bg-white absolute top-1/2 h-96 w-96 md:h-full md:w-1/2 rounded-full animate-slow-ping" />
         <div className="flex bg-blue-400 text-white text-2xl md:text-5xl py-8 absolute bottom-0 h-1/4 w-full z-20 justify-around">
           <div className="flex justify-around w-full font-bold text-xs sm:text-base md:text-2xl lg:text-5xl">
             <p className="mr-10 sm:mr-24 md:mr-48">F.E.M.S. 5.562.92</p>
