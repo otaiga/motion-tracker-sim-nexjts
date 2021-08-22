@@ -6,7 +6,8 @@ interface Opts {
 }
 
 const Timer = (props: Opts) => {
-  const [timeLeft, setTimeLeft] = useState(props.seconds);
+  const { seconds } = props;
+  const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
     if (!timeLeft) return;
