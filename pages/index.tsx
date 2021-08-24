@@ -89,15 +89,17 @@ const Home = () => {
             <p className="ml-20 sm:ml-24 md:ml-48 pr-2">CX. 54/38.10</p>
           </div>
           <div
+            role="button"
             onClick={() => {
+              setCountDownStarted(false);
               setPopUp(true);
             }}
-            className="flex px-5 text-xl sm:text-2xl md:text-5xl font-bold absolute top-0 bg-black text-red-600 rounded-b-3xl w-28 h-12 sm:h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
+            className="flex px-5 text-xl sm:text-2xl md:text-5xl font-bold absolute top-0 border-4 border-t-0 border-blue-800 bg-black text-red-600 rounded-b-3xl w-28 h-12 sm:h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
           >
             {countDownStarted ? (
               <Timer seconds={timeSet} callback={timerCallback} />
             ) : (
-              0
+              <div className="animate-pulse">0</div>
             )}
             <div className="flex flex-col text-xs leading-none md:leading-none sm:leading-none md:text-lg items-center">
               <p>50</p>
