@@ -10,7 +10,6 @@ const Home = () => {
   const [timeSet, setTimeSet] = useState(0);
   const [markerPerc, setMarkerPerc] = useState("");
   const [playMarker, setPlayMarker] = useState(false);
-
   const audio = useRef<HTMLAudioElement>(null);
   const markerAudio = useRef<HTMLAudioElement>(null);
 
@@ -30,11 +29,6 @@ const Home = () => {
   };
 
   const handleOkClick = (timerSet: number) => {
-    setMarkerPerc("");
-    setCountDownStarted(false);
-    setTimeSet(timerSet);
-    setCountDownStarted(true);
-    setPopUp(false);
     if (audio && audio.current) {
       audio.current.autoplay = true;
     }
@@ -43,6 +37,11 @@ const Home = () => {
         markerAudio.current.autoplay = true;
       }
     }
+    setMarkerPerc("");
+    setCountDownStarted(false);
+    setTimeSet(timerSet);
+    setCountDownStarted(true);
+    setPopUp(false);
   };
 
   const handleCancelClick = () => {
@@ -118,10 +117,10 @@ const Home = () => {
         />
       )}
       <audio ref={audio}>
-        <source src="./pulse.mp3" type="audio/mpeg"></source>
+        <source src="./pulse.mp3" type="audio/mp3"></source>
       </audio>
       <audio ref={markerAudio}>
-        <source src="./markerPulse.mp3" type="audio/mpeg"></source>
+        <source src="./markerPulse.mp3" type="audio/mp3"></source>
       </audio>
     </div>
   );
