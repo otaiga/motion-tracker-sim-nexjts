@@ -1,8 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Howl } from "howler";
 import Head from "next/head";
 import Timer from "../components/Timer";
 import Marker from "../components/Marker";
 import PopUp from "../components/Popup";
+
+const pulse = new Howl({
+  src: ["./pulse.mp3"],
+});
+
+const markerPulse = new Howl({
+  src: ["./markerPulse.mp3"],
+});
 
 const Home = () => {
   const [countDownStarted, setCountDownStarted] = useState(false);
@@ -10,8 +19,6 @@ const Home = () => {
   const [timeSet, setTimeSet] = useState(0);
   const [markerPerc, setMarkerPerc] = useState("");
   const [playMarker, setPlayMarker] = useState(false);
-  const audio = useRef<HTMLAudioElement>(null);
-  const markerAudio = useRef<HTMLAudioElement>(null);
 
   const timerCallback = (updatedTime: number) => {
     if (updatedTime === 0) {
@@ -29,14 +36,7 @@ const Home = () => {
   };
 
   const handleOkClick = (timerSet: number) => {
-    if (audio && audio.current) {
-      audio.current.autoplay = true;
-    }
-    if (markerAudio && markerAudio.current) {
-      if (playMarker) {
-        markerAudio.current.autoplay = true;
-      }
-    }
+    pulse.play();
     setMarkerPerc("");
     setCountDownStarted(false);
     setTimeSet(timerSet);
@@ -53,15 +53,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (audio && audio.current) {
-      if (countDownStarted) {
-        audio.current.play();
-      }
+    if (countDownStarted) {
+      pulse.play();
     }
-    if (markerAudio && markerAudio.current) {
-      if (playMarker) {
-        markerAudio.current.play();
-      }
+    if (playMarker) {
+      markerPulse.play();
     }
   }, [markerPerc]);
 
@@ -116,12 +112,6 @@ const Home = () => {
           handleCancelClick={handleCancelClick}
         />
       )}
-      <audio ref={audio}>
-        <source src="./pulse.mp3" type="audio/mp3"></source>
-      </audio>
-      <audio ref={markerAudio}>
-        <source src="./markerPulse.mp3" type="audio/mp3"></source>
-      </audio>
     </div>
   );
 };

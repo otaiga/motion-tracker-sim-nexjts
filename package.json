@@ -11,11 +11,13 @@
     "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && git add out/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix out origin gh-pages"
   },
   "dependencies": {
+    "howler": "^2.2.3",
     "next": "11.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.3",
     "@types/react": "17.0.19",
     "autoprefixer": "^10.3.1",
     "babel-plugin-transform-define": "^2.0.0",
