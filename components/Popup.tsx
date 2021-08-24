@@ -23,6 +23,9 @@ const Popup = (props: PopupProps) => {
                 id="timeSet"
                 type="number"
                 onChange={(e) => {
+                  if (Number(e.target.value) > 99999) {
+                    return;
+                  }
                   setTimeSet(Number(e.target.value));
                 }}
               />
