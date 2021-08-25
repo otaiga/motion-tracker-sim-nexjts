@@ -19,7 +19,7 @@ const Timer = (props: Opts) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeLeft]);
+  }, [timeLeft, callback]);
 
   return <p>{timeLeft}</p>;
 };
