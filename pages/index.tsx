@@ -60,7 +60,7 @@ const Home = () => {
     if (playMarker) {
       markerPulse.play();
     }
-  }, [markerPerc]);
+  }, [markerPerc, countDownStarted, playMarker]);
 
   return (
     <div className="bg-black h-screen mx-auto overflow-hidden relative">

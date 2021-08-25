@@ -6,7 +6,7 @@ interface Opts {
 }
 
 const Timer = (props: Opts) => {
-  const { seconds } = props;
+  const { seconds, callback } = props;
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Timer = (props: Opts) => {
     const intervalId = setInterval(() => {
       const updatedTime = timeLeft - 1;
       setTimeLeft(updatedTime);
-      props.callback(updatedTime);
+      callback(updatedTime);
     }, 1000);
 
     return () => clearInterval(intervalId);
