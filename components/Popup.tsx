@@ -8,6 +8,15 @@ interface PopupProps {
 const Popup = (props: PopupProps) => {
   const [timeSet, setTimeSet] = useState(0);
   const { handleOkClick, handleCancelClick } = props;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value > 9999) {
+      return;
+    }
+    setTimeSet(value);
+  };
+
   return (
     <div>
       <div className="fixed inset-0 max-w-screen-lg mx-auto rounded opacity-75 pointer-events-none" />
@@ -22,13 +31,8 @@ const Popup = (props: PopupProps) => {
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="timeSet"
                 type="number"
-                onChange={(e) => {
-                  const value = Number(e.target.value);
-                  if (isNaN(value) || value > 99999) {
-                    return;
-                  }
-                  setTimeSet(value);
-                }}
+                value={timeSet.toString()}
+                onChange={handleChange}
               />
             </div>
             <div className="flex justify-end pt-2">
