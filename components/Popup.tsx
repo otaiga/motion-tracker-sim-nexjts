@@ -17,7 +17,7 @@ const Popup = (props: PopupProps) => {
             <div className="flex items-center justify-between pb-3">
               <p className="text-lg font-bold ">SET TIMER (seconds)</p>
             </div>
-            <div className="mb-4">
+            <div className="mb-1">
               <input
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="timeSet"
@@ -33,6 +33,7 @@ const Popup = (props: PopupProps) => {
             </div>
             <div className="flex justify-end pt-2">
               <button
+                tabIndex={0}
                 className={`px-4 py-1 bg-black text-green-500 mx-2 rounded outline-none focus:outline-none`}
                 onClick={() => {
                   handleOkClick(timeSet);
@@ -41,6 +42,7 @@ const Popup = (props: PopupProps) => {
                 OK
               </button>
               <button
+                tabIndex={1}
                 className={`px-4 py-1 bg-black text-red-500 rounded outline-none focus:outline-none`}
                 onClick={handleCancelClick}
               >

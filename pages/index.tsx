@@ -15,6 +15,7 @@ const markerPulse = new Howl({
 
 const Home = () => {
   const [countDownStarted, setCountDownStarted] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
   const [popUp, setPopUp] = useState(false);
   const [timeSet, setTimeSet] = useState(0);
   const [markerPerc, setMarkerPerc] = useState("");
@@ -88,22 +89,25 @@ const Home = () => {
             <p className="mr-20 sm:mr-24 md:mr-48 pl-2">F.E.M.S. 5.562.92</p>
             <p className="ml-20 sm:ml-24 md:ml-48 pr-2">CX. 54/38.10</p>
           </div>
-          <div
-            role="button"
-            onClick={() => {
-              setCountDownStarted(false);
-              setPopUp(true);
-            }}
-            className="flex px-5 text-xl sm:text-2xl md:text-5xl font-bold absolute top-0 border-4 border-t-0 border-blue-800 bg-black text-red-600 rounded-b-3xl w-28 h-12 sm:h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
-          >
-            {countDownStarted ? (
-              <Timer seconds={timeSet} callback={timerCallback} />
-            ) : (
-              <div className="animate-pulse">0</div>
-            )}
-            <div className="flex flex-col text-xs leading-none md:leading-none sm:leading-none md:text-lg items-center">
-              <p>50</p>
-              <p>M</p>
+          <div className="flex flex-col absolute top-0 items-center">
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                setCountDownStarted(false);
+                setPopUp(true);
+              }}
+              className="flex px-5 text-xl sm:text-2xl md:text-5xl font-bold top-0 bg-black text-red-600 rounded-b-3xl w-28 h-12 sm:h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
+            >
+              {countDownStarted ? (
+                <Timer seconds={timeSet} callback={timerCallback} />
+              ) : (
+                <div className="animate-pulse">0</div>
+              )}
+              <div className="flex flex-col text-xs leading-none md:leading-none sm:leading-none md:text-lg items-center">
+                <p>50</p>
+                <p>M</p>
+              </div>
             </div>
           </div>
         </div>
@@ -113,6 +117,34 @@ const Home = () => {
           handleOkClick={handleOkClick}
           handleCancelClick={handleCancelClick}
         />
+      )}
+      {firstLoad && (
+        <div>
+          <div className="fixed inset-0 max-w-screen-lg mx-auto rounded opacity-75 pointer-events-none" />
+          <div className="fixed inset-0 flex items-center justify-center">
+            <div className="z-50 w-11/12 mx-auto overflow-y-auto bg-blue-400 rounded shadow-lg sm:max-w-sm">
+              <div className="px-6 py-4 text-left modal-content text-white">
+                <div className="flex items-center justify-between pb-3">
+                  <p className="text-2xl font-bold ">Motion Tracker</p>
+                </div>
+                <div className="mb-1 text-lg">
+                  To set the timer, click the counter.
+                </div>
+                <div className="flex justify-end pt-2">
+                  <button
+                    tabIndex={1}
+                    className={`px-4 py-1 bg-black text-green-500 mx-2 rounded outline-none focus:outline-none`}
+                    onClick={() => {
+                      setFirstLoad(false);
+                    }}
+                  >
+                    OK
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
