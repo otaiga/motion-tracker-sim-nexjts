@@ -28,16 +28,25 @@ const Home = () => {
       return;
     }
     const perc = 50 - ((100 / Number(timeSet)) * updatedTime) / 2;
-    if (updatedTime < 5) {
-      setPlayMarker(true);
+    if (updatedTime < 10) {
+      const value = 10 - updatedTime;
+      markerPulse.rate(0.1 * value + 1);
+      if (!playMarker) {
+        setPlayMarker(true);
+      }
     } else {
-      setPlayMarker(false);
+      markerPulse.rate(0);
+      if (playMarker) {
+        setPlayMarker(false);
+      }
     }
     setMarkerPerc(`${perc < 0 ? perc - perc * 0.5 : perc}%`);
   };
 
   const handleOkClick = (timerSet: number) => {
-    pulse.play();
+    if (timerSet === 0) {
+      return handleCancelClick();
+    }
     setMarkerPerc("");
     setCountDownStarted(false);
     setTimeSet(timerSet);
@@ -73,6 +82,11 @@ const Home = () => {
       <main className="flex flex-col items-center">
         <div className="animate-scenario absolute items-center justify-center portrait:bottom-2 landscape:top-4">
           <img
+            src="./trackerBlips.svg"
+            alt="Picture of radar blips"
+            className="absolute z-10 h-96 w-96 md:h-full md:w-full animate-slow-ping"
+          />
+          <img
             src="./trackerImage.svg"
             alt="Picture of radar background"
             className="z-0 h-96 w-96 md:h-full md:w-full"
@@ -83,7 +97,6 @@ const Home = () => {
             </div>
           )}
         </div>
-        <div className="bg-white absolute top-1/2 h-96 w-96 md:h-full md:w-1/2 rounded-full animate-slow-ping" />
         <div className="flex bg-blue-400 text-white text-2xl md:text-5xl py-8 absolute bottom-0 h-1/4 w-full z-20 justify-around">
           <div className="flex justify-around w-full font-bold text-xs sm:text-base md:text-2xl lg:text-5xl">
             <p className="mr-20 sm:mr-24 md:mr-48 pl-2">F.E.M.S. 5.562.92</p>
