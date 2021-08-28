@@ -110,6 +110,10 @@ const Home = () => {
                 setCountDownStarted(false);
                 setPopUp(true);
               }}
+              onKeyPress={() => {
+                setCountDownStarted(false);
+                setPopUp(true);
+              }}
               className="flex px-5 text-xl sm:text-2xl md:text-5xl font-bold top-0 bg-black text-red-600 rounded-b-3xl w-28 h-12 sm:h-12 md:h-24 md:w-52 items-center justify-items-center justify-between p-4"
             >
               {countDownStarted ? (
@@ -145,9 +149,11 @@ const Home = () => {
                 </div>
                 <div className="flex justify-end pt-2">
                   <button
-                    tabIndex={1}
-                    className={`px-4 py-1 bg-black text-green-500 mx-2 rounded outline-none focus:outline-none`}
+                    role="button"
+                    tabIndex={0}
+                    className={`px-4 py-1 bg-black text-green-500 mx-2 rounded`}
                     onClick={startTimer}
+                    onKeyPress={startTimer}
                   >
                     OK
                   </button>

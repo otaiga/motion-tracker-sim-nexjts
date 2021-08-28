@@ -36,18 +36,24 @@ const Popup = (props: PopupProps) => {
             </div>
             <div className="flex justify-end pt-2">
               <button
+                role="button"
                 tabIndex={0}
-                className={`px-4 py-1 bg-black text-green-500 mx-2 rounded outline-none focus:outline-none`}
+                className={`px-4 py-1 bg-black text-green-500 mx-2 rounded`}
                 onClick={() => {
+                  handleOkClick(timeSet);
+                }}
+                onKeyPress={() => {
                   handleOkClick(timeSet);
                 }}
               >
                 OK
               </button>
               <button
-                tabIndex={1}
-                className={`px-4 py-1 bg-black text-red-500 rounded outline-none focus:outline-none`}
+                role="button"
+                tabIndex={0}
+                className={`px-4 py-1 bg-black text-red-500 rounded`}
                 onClick={handleCancelClick}
+                onKeyPress={handleCancelClick}
               >
                 Cancel
               </button>
