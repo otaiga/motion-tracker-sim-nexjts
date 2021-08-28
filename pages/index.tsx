@@ -19,34 +19,41 @@ const Home = () => {
   const [popUp, setPopUp] = useState(false);
   const [timeSet, setTimeSet] = useState(0);
   const [markerPerc, setMarkerPerc] = useState("");
-  const [playMarker, setPlayMarker] = useState(false);
 
   const timerCallback = (updatedTime: number) => {
     if (updatedTime === 0) {
+      markerPulse.rate(0);
       setCountDownStarted(false);
-      setPlayMarker(false);
       return;
     }
+    let rate = 1;
     const perc = 50 - ((100 / Number(timeSet)) * updatedTime) / 2;
-    if (updatedTime < 10) {
-      const value = 10 - updatedTime;
-      markerPulse.rate(0.1 * value + 1);
-      if (!playMarker) {
-        setPlayMarker(true);
-      }
-    } else {
-      markerPulse.rate(0);
-      if (playMarker) {
-        setPlayMarker(false);
-      }
+    if (updatedTime >= 10 && updatedTime < 15) {
+      rate = 1.1;
     }
+    if (updatedTime >= 5 && updatedTime < 10) {
+      rate = 1.2;
+    } else if (updatedTime > 0 && updatedTime < 5) {
+      rate = 1.3;
+    }
+    markerPulse.rate(rate);
     setMarkerPerc(`${perc < 0 ? perc - perc * 0.5 : perc}%`);
+  };
+
+  const startTimer = () => {
+    markerPulse.rate(0);
+    markerPulse.loop(true);
+    pulse.loop(true);
+    markerPulse.play();
+    pulse.play();
+    setFirstLoad(false);
   };
 
   const handleOkClick = (timerSet: number) => {
     if (timerSet === 0) {
       return handleCancelClick();
     }
+    markerPulse.rate(1);
     setMarkerPerc("");
     setCountDownStarted(false);
     setTimeSet(timerSet);
@@ -59,17 +66,10 @@ const Home = () => {
     setMarkerPerc("");
     setCountDownStarted(false);
     setPopUp(false);
-    setPlayMarker(false);
+    markerPulse.rate(0);
   };
 
-  useEffect(() => {
-    if (countDownStarted) {
-      pulse.play();
-    }
-    if (playMarker) {
-      markerPulse.play();
-    }
-  }, [markerPerc, countDownStarted, playMarker]);
+  useEffect(() => {}, [markerPerc, countDownStarted]);
 
   return (
     <div className="bg-black h-screen mx-auto overflow-hidden relative">
@@ -84,7 +84,7 @@ const Home = () => {
           <img
             src="./trackerBlips.svg"
             alt="Picture of radar blips"
-            className="absolute z-10 h-96 w-96 md:h-full md:w-full animate-slow-ping"
+            className="absolute z-10 h-96 w-96 md:h-full md:w-full animate-ping"
           />
           <img
             src="./trackerImage.svg"
@@ -147,9 +147,7 @@ const Home = () => {
                   <button
                     tabIndex={1}
                     className={`px-4 py-1 bg-black text-green-500 mx-2 rounded outline-none focus:outline-none`}
-                    onClick={() => {
-                      setFirstLoad(false);
-                    }}
+                    onClick={startTimer}
                   >
                     OK
                   </button>
